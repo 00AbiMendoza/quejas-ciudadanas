@@ -1,0 +1,41 @@
+# Mantiene despierto el sitio publicado en Render (plan gratuito).
+# Render "duerme" el servicio tras 15 minutos sin visitas; esta tarea lo visita
+# cada 5 minutos para que siempre responda de inmediato.
+#
+# Para desactivarla: GitHub → pestaña Actions → "Mantener el sitio activo" → ⋯ → Disable workflow
+# (o borra este archivo).
+
+name: Mantener el sitio activo
+
+on:
+  schedule:
+    - cron: "*/5 * * * *" # cada 5 minutos (GitHub puede retrasarla unos minutos)
+  workflow_dispatch: # permite ejecutarla manualmente desde la pestaña Actions
+
+permissions: {}
+
+concurrency:
+  group: mantener-activo
+  cancel-in-progress: true
+
+jobs:
+  visitar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    env:
+      URL_SITIO: https://quejas-ciudadanas-5wxj.onrender.com
+    steps:
+      - name: Visitar el sitio publicado
+        run: |
+          # /api/catalogos no consulta Firestore, así que no gasta la cuota gratuita de Firebase.
+          for intento in 1 2 3; do
+            codigo=$(curl -s -o /dev/null -w "%{http_code}" --max-time 90 "$URL_SITIO/api/catalogos" || true)
+            echo "Intento $intento: HTTP $codigo"
+            if [ "$codigo" = "200" ]; then
+              echo "El sitio está activo ✅"
+              exit 0
+            fi
+            sleep 15
+          done
+          # No se marca como fallo para no llenar tu correo de notificaciones.
+          echo "::warning::El sitio no respondió con 200 (último código: $codigo)."

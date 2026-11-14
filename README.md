@@ -283,7 +283,9 @@ gh repo create quejas-ciudadanas --public --source . --push
 
 *Alternativa manual:* **New → Web Service** → repositorio → Build command `npm install` · Start command `npm start` · agrega las variables de `render.yaml`.
 
-> **Nota del plan gratuito de Render:** el servicio se "duerme" tras 15 minutos sin visitas y la primera carga tarda ~1 minuto en despertar. Abre el enlace un momento antes de presentarlo.
+> **Nota del plan gratuito de Render:** el servicio se "duerme" tras 15 minutos sin visitas y la primera carga tarda ~1 minuto en despertar.
+>
+> Para mantenerlo **siempre activo**, el repositorio incluye la tarea de GitHub Actions [`mantener-activo.yml`](.github/workflows/mantener-activo.yml), que visita el sitio cada 5 minutos (sin costo en repositorios públicos y sin consumir cuota de Firebase). Render ofrece 750 horas gratis al mes por cuenta; un servicio despierto 24/7 usa ~720–744 h, así que conviene desactivar la tarea cuando ya no se necesite (pestaña **Actions → Mantener el sitio activo → Disable workflow**).
 
 ---
 
