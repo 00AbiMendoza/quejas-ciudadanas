@@ -6,7 +6,7 @@ Sistema web funcional para que la ciudadanía registre quejas o reportes (con fo
 |---|---|
 | **Sitio publicado** | `https://TU-SERVICIO.onrender.com` ← *reemplazar al publicar* |
 | **Panel de administración** | `https://TU-SERVICIO.onrender.com/admin` |
-| **Repositorio** | `https://github.com/TU-USUARIO/quejas-ciudadanas` |
+| **Repositorio** | <https://github.com/00AbiMendoza/quejas-ciudadanas> |
 
 **Tecnologías:** HTML5, CSS3 y JavaScript (frontend) · Node.js + Express (backend/API REST) · **Firebase Cloud Firestore en plan gratuito Spark** (persistencia) · Sharp (procesamiento de imágenes) · JWT (sesión del panel).
 
