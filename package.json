@@ -1,0 +1,17 @@
+{
+  "name": "sistema-quejas-ciudadanas",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Sistema web de atención de quejas ciudadanas: Portal público + Panel de Administración Municipal (Node.js, Express y Firebase Firestore).",
+  "scripts": {
+    "postinstall": "npm ci --prefix backend",
+    "start": "npm start --prefix backend",
+    "dev": "npm run dev --prefix backend",
+    "test": "npm test --prefix backend",
+    "emulador": "npx -y firebase-tools@13 emulators:start --only firestore --project demo-quejas"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT"
+}

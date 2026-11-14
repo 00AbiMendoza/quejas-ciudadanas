@@ -1,0 +1,15 @@
+rules_version = '2';
+
+// Reglas de seguridad de Cloud Firestore
+// ───────────────────────────────────────
+// Ningún navegador puede leer ni escribir directamente en la base de datos.
+// Todo el acceso pasa por el backend (Node.js + Express), que usa el Admin SDK
+// con una cuenta de servicio; el Admin SDK no está sujeto a estas reglas.
+// Así se garantiza que cada dato sea validado por la API antes de guardarse.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

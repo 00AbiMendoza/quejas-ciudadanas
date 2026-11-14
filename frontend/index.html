@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Atención Ciudadana · Registrar queja</title>
+    <meta name="description" content="Portal público para registrar quejas y reportes ciudadanos ante la Municipalidad y consultar su estado." />
+    <meta name="theme-color" content="#0b2a4f" />
+    <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="assets/css/base.css" />
+    <link rel="stylesheet" href="assets/css/portal.css" />
+    <script type="module" src="assets/js/portal.js"></script>
+  </head>
+  <body>
+    <a class="saltar-contenido" href="#contenido">Saltar al contenido</a>
+
+    <header class="encabezado">
+      <div class="contenedor encabezado-interior">
+        <a class="marca" href="./">
+          <span class="marca-logo"><span data-icono="edificio"></span></span>
+          <span class="marca-texto"><strong>Municipalidad</strong><small>Atención Ciudadana</small></span>
+        </a>
+        <nav class="nav-principal" aria-label="Principal">
+          <a href="#registrar" class="nav-enlace">Registrar queja</a>
+          <a href="#seguimiento" class="nav-enlace">Consultar estado</a>
+          <a href="admin" class="btn btn-secundario btn-pequeno nav-admin"><span data-icono="candado"></span>Acceso municipal</a>
+        </nav>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="contenedor hero-interior">
+        <div class="hero-texto">
+          <p class="hero-etiqueta">Portal público de atención ciudadana</p>
+          <h1>¿Viste un problema en tu comunidad? Repórtalo aquí.</h1>
+          <p class="hero-sub">
+            Baches, lámparas apagadas, basura acumulada, fugas de agua… Tu reporte llega directamente al personal municipal y
+            recibes un folio para darle seguimiento.
+          </p>
+        </div>
+        <ol class="pasos" aria-label="Cómo funciona">
+          <li><span class="paso-icono"><span data-icono="documento"></span></span><span><strong>Describe</strong> el problema y dónde ocurre</span></li>
+          <li><span class="paso-icono"><span data-icono="camara"></span></span><span><strong>Adjunta</strong> una fotografía como evidencia</span></li>
+          <li><span class="paso-icono"><span data-icono="check"></span></span><span><strong>Recibe</strong> tu folio de confirmación</span></li>
+        </ol>
+      </div>
+    </section>
+
+    <main id="contenido" class="contenedor principal">
+      <div class="pestanas" role="tablist" aria-label="Opciones del portal">
+        <button type="button" class="pestana" role="tab" id="tab-registrar" aria-controls="panel-registrar" aria-selected="true" data-vista="registrar">
+          <span data-icono="nota"></span>Nueva queja
+        </button>
+        <button type="button" class="pestana" role="tab" id="tab-seguimiento" aria-controls="panel-seguimiento" aria-selected="false" tabindex="-1" data-vista="seguimiento">
+          <span data-icono="buscar"></span>Consultar estado
+        </button>
+      </div>
+
+      <!-- ===================== PANEL: REGISTRAR QUEJA ===================== -->
+      <section id="panel-registrar" role="tabpanel" aria-labelledby="tab-registrar">
+        <form id="formulario-queja" class="tarjeta formulario" novalidate>
+          <div id="resumen-errores" class="aviso aviso-error" role="alert" tabindex="-1" hidden></div>
+
+          <fieldset class="seccion">
+            <legend class="seccion-titulo"><span class="seccion-numero">1</span>¿Qué problema quieres reportar?</legend>
+
+            <div class="grupo-campo">
+              <span class="etiqueta" id="etiqueta-categoria">Categoría <span class="requerido" aria-hidden="true">*</span></span>
+              <div id="lista-categorias" class="categorias" role="radiogroup" aria-labelledby="etiqueta-categoria" aria-describedby="error-categoria">
+                <div class="esqueleto categoria-esqueleto"></div>
+                <div class="esqueleto categoria-esqueleto"></div>
+                <div class="esqueleto categoria-esqueleto"></div>
+                <div class="esqueleto categoria-esqueleto"></div>
+              </div>
+              <p class="mensaje-error" id="error-categoria" data-error-de="categoria"></p>
+            </div>
+
+            <div class="campo">
+              <label for="asunto">Asunto <span class="requerido" aria-hidden="true">*</span></label>
+              <input id="asunto" name="asunto" class="control" type="text" maxlength="100" autocomplete="off"
+                placeholder="Ej.: Bache profundo frente a la escuela" aria-describedby="error-asunto" required />
+              <p class="mensaje-error" id="error-asunto" data-error-de="asunto"></p>
+            </div>
+
+            <div class="campo">
+              <div class="campo-cabecera">
+                <label for="descripcion">Descripción del problema <span class="requerido" aria-hidden="true">*</span></label>
+                <span class="contador" id="contador-descripcion" aria-live="polite">0 / 2000</span>
+              </div>
+              <textarea id="descripcion" name="descripcion" class="control" rows="5" maxlength="2000"
+                placeholder="Cuéntanos qué ocurre, desde cuándo y cómo afecta a los vecinos."
+                aria-describedby="ayuda-descripcion error-descripcion" required></textarea>
+              <p class="ayuda" id="ayuda-descripcion">Mínimo 20 caracteres. Entre más detalles, más rápido podremos atenderlo.</p>
+              <p class="mensaje-error" id="error-descripcion" data-error-de="descripcion"></p>
+            </div>
+          </fieldset>
+
+          <fieldset class="seccion">
+            <legend class="seccion-titulo"><span class="seccion-numero">2</span>¿Dónde ocurre?</legend>
+
+            <div class="campo">
+              <label for="direccion">Dirección <span class="requerido" aria-hidden="true">*</span></label>
+              <input id="direccion" name="direccion" class="control" type="text" maxlength="200" autocomplete="street-address"
+                placeholder="Ej.: 6a. avenida 12-30" aria-describedby="error-direccion" required />
+              <p class="mensaje-error" id="error-direccion" data-error-de="direccion"></p>
+            </div>
+
+            <div class="fila-2">
+              <div class="campo">
+                <label for="zona">Zona, colonia o barrio <span class="opcional">(opcional)</span></label>
+                <input id="zona" name="zona" class="control" type="text" maxlength="80" placeholder="Ej.: Zona 1" aria-describedby="error-zona" />
+                <p class="mensaje-error" id="error-zona" data-error-de="zona"></p>
+              </div>
+              <div class="campo">
+                <label for="referencia">Referencia <span class="opcional">(opcional)</span></label>
+                <input id="referencia" name="referencia" class="control" type="text" maxlength="200" placeholder="Ej.: Frente al parque" aria-describedby="error-referencia" />
+                <p class="mensaje-error" id="error-referencia" data-error-de="referencia"></p>
+              </div>
+            </div>
+
+            <div class="grupo-campo ubicacion-gps">
+              <input type="hidden" name="latitud" id="latitud" />
+              <input type="hidden" name="longitud" id="longitud" />
+              <button type="button" class="btn btn-secundario btn-pequeno" id="btn-ubicacion"><span data-icono="mira"></span>Agregar mi ubicación GPS</button>
+              <span id="estado-ubicacion" class="ayuda" aria-live="polite">Opcional: ayuda a ubicar el lugar exacto.</span>
+              <p class="mensaje-error" data-error-de="ubicacion"></p>
+            </div>
+          </fieldset>
+
+          <fieldset class="seccion">
+            <legend class="seccion-titulo"><span class="seccion-numero">3</span>Fotografía del problema <span class="opcional">(recomendada)</span></legend>
+
+            <div class="grupo-campo">
+              <label class="zona-foto" id="zona-foto" for="foto">
+                <input id="foto" name="foto" type="file" accept="image/jpeg,image/png,image/webp" class="visualmente-oculto" aria-describedby="ayuda-foto error-foto" />
+                <span class="zona-foto-icono"><span data-icono="subir"></span></span>
+                <span class="zona-foto-texto"><strong>Toca para elegir una foto</strong> o arrástrala aquí</span>
+                <span class="ayuda" id="ayuda-foto">JPG, PNG o WEBP · máximo <span id="max-foto">5 MB</span></span>
+              </label>
+
+              <div id="vista-previa" class="vista-previa" hidden>
+                <img id="vista-previa-img" alt="Vista previa de la fotografía adjunta" />
+                <div class="vista-previa-info">
+                  <strong id="vista-previa-nombre"></strong>
+                  <span id="vista-previa-detalle" class="ayuda"></span>
+                  <div class="vista-previa-acciones">
+                    <label for="foto" class="btn btn-secundario btn-pequeno">Cambiar</label>
+                    <button type="button" class="btn btn-fantasma btn-pequeno" id="btn-quitar-foto"><span data-icono="x"></span>Quitar</button>
+                  </div>
+                </div>
+              </div>
+              <p class="mensaje-error" id="error-foto" data-error-de="foto"></p>
+            </div>
+          </fieldset>
+
+          <fieldset class="seccion">
+            <legend class="seccion-titulo"><span class="seccion-numero">4</span>Tus datos de contacto</legend>
+
+            <label class="casilla casilla-destacada">
+              <input type="checkbox" name="anonimo" id="anonimo" value="true" />
+              <span><strong>Quiero reportar de forma anónima</strong><br /><span class="ayuda">No podremos contactarte para pedir más información.</span></span>
+            </label>
+
+            <div id="datos-contacto" class="datos-contacto">
+              <div class="campo">
+                <label for="nombre">Nombre completo <span class="requerido" aria-hidden="true">*</span></label>
+                <input id="nombre" name="nombre" class="control" type="text" maxlength="100" autocomplete="name" placeholder="Ej.: María López" aria-describedby="error-nombre" />
+                <p class="mensaje-error" id="error-nombre" data-error-de="nombre"></p>
+              </div>
+              <div class="fila-2">
+                <div class="campo">
+                  <label for="correo">Correo electrónico</label>
+                  <input id="correo" name="correo" class="control" type="email" maxlength="120" autocomplete="email" placeholder="nombre@correo.com" aria-describedby="error-correo" />
+                  <p class="mensaje-error" id="error-correo" data-error-de="correo"></p>
+                </div>
+                <div class="campo">
+                  <label for="telefono">Teléfono</label>
+                  <input id="telefono" name="telefono" class="control" type="tel" maxlength="20" autocomplete="tel" inputmode="tel" placeholder="Ej.: 5555-1234" aria-describedby="error-telefono" />
+                  <p class="mensaje-error" id="error-telefono" data-error-de="telefono"></p>
+                </div>
+              </div>
+              <p class="ayuda">Ingresa al menos un medio de contacto (correo o teléfono).</p>
+            </div>
+          </fieldset>
+
+          <!-- Campo trampa contra bots: las personas no lo ven ni lo llenan -->
+          <div class="trampa" aria-hidden="true">
+            <label for="sitioWeb">Sitio web</label>
+            <input id="sitioWeb" name="sitioWeb" type="text" tabindex="-1" autocomplete="off" />
+          </div>
+
+          <div class="pie-formulario">
+            <div class="grupo-campo">
+              <label class="casilla">
+                <input type="checkbox" name="aceptaTerminos" id="aceptaTerminos" value="true" aria-describedby="error-aceptaTerminos" />
+                <span>Acepto que la Municipalidad use estos datos únicamente para atender mi queja.</span>
+              </label>
+              <p class="mensaje-error" id="error-aceptaTerminos" data-error-de="aceptaTerminos"></p>
+            </div>
+
+            <div class="envio">
+              <div id="progreso" class="progreso" hidden>
+                <div class="progreso-barra"><span id="progreso-relleno"></span></div>
+                <span id="progreso-texto" class="ayuda" aria-live="polite">Enviando…</span>
+              </div>
+              <button type="submit" class="btn btn-primario btn-grande" id="btn-enviar">
+                <span data-icono="enviar"></span><span class="btn-texto">Enviar queja</span>
+              </button>
+            </div>
+          </div>
+        </form>
+
+        <!-- Confirmación del registro -->
+        <section id="confirmacion" class="tarjeta confirmacion" tabindex="-1" aria-labelledby="titulo-confirmacion" hidden>
+          <div class="confirmacion-icono"><span data-icono="check"></span></div>
+          <h2 id="titulo-confirmacion">¡Tu queja fue registrada!</h2>
+          <p class="confirmacion-texto">Quedó guardada en el sistema municipal y ya está visible para el personal encargado. Guarda tu número de folio para consultar el avance.</p>
+
+          <div class="folio-caja">
+            <span class="folio-etiqueta">Número de folio</span>
+            <strong id="conf-folio" class="folio-valor"></strong>
+            <button type="button" class="btn btn-secundario btn-pequeno" id="btn-copiar-folio"><span data-icono="copiar"></span>Copiar</button>
+          </div>
+
+          <dl class="resumen">
+            <div><dt>Categoría</dt><dd id="conf-categoria"></dd></div>
+            <div><dt>Asunto</dt><dd id="conf-asunto"></dd></div>
+            <div><dt>Fecha de registro</dt><dd id="conf-fecha"></dd></div>
+            <div><dt>Estado</dt><dd id="conf-estado"></dd></div>
+            <div><dt>Fotografía</dt><dd id="conf-foto"></dd></div>
+          </dl>
+
+          <div class="confirmacion-acciones">
+            <button type="button" class="btn btn-primario" id="btn-ver-estado"><span data-icono="buscar"></span>Consultar estado</button>
+            <button type="button" class="btn btn-secundario" id="btn-nueva-queja"><span data-icono="nota"></span>Registrar otra queja</button>
+          </div>
+        </section>
+      </section>
+
+      <!-- ===================== PANEL: CONSULTAR ESTADO ===================== -->
+      <section id="panel-seguimiento" role="tabpanel" aria-labelledby="tab-seguimiento" hidden>
+        <div class="tarjeta seguimiento">
+          <h2>Consulta el estado de tu queja</h2>
+          <p class="ayuda">Ingresa el folio que recibiste al registrarla.</p>
+          <form id="formulario-seguimiento" class="seguimiento-form" novalidate>
+            <div class="campo">
+              <label for="folio" class="visualmente-oculto">Número de folio</label>
+              <input id="folio" name="folio" class="control control-folio" type="text" placeholder="QC-2026-XXXXXX" autocomplete="off"
+                spellcheck="false" maxlength="14" aria-describedby="error-folio" />
+              <p class="mensaje-error" id="error-folio" data-error-de="folio"></p>
+            </div>
+            <button type="submit" class="btn btn-primario" id="btn-buscar-folio"><span data-icono="buscar"></span>Buscar</button>
+          </form>
+          <div id="folios-recientes" class="folios-recientes" hidden></div>
+          <div id="resultado-seguimiento" aria-live="polite"></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="pie">
+      <div class="contenedor pie-interior">
+        <span>© <span id="anio"></span> Municipalidad · Sistema de Atención de Quejas Ciudadanas</span>
+        <span class="estado-servicio" id="estado-servicio"><span class="punto-estado"></span><span>Verificando servicio…</span></span>
+      </div>
+    </footer>
+  </body>
+</html>

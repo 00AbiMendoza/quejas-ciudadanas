@@ -1,0 +1,33 @@
+# Despliegue en Render (plan gratuito) — Blueprint
+# Render → New → Blueprint → selecciona este repositorio.
+# Solo tendrás que pegar los valores marcados con "sync: false".
+services:
+  - type: web
+    name: quejas-ciudadanas
+    runtime: node
+    plan: free
+    region: oregon
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/catalogos
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: NODE_ENV
+        value: production
+      - key: TRUST_PROXY
+        value: "1"
+      # Contenido COMPLETO del archivo JSON de la cuenta de servicio de Firebase
+      - key: FIREBASE_SERVICE_ACCOUNT_JSON
+        sync: false
+      - key: ADMIN_USER
+        value: admin
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: ADMIN_NAME
+        value: Administrador municipal
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRES_IN
+        value: 8h

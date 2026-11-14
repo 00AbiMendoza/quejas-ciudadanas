@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Panel de Administración Municipal · Quejas ciudadanas</title>
+    <meta name="robots" content="noindex" />
+    <meta name="theme-color" content="#0b2a4f" />
+    <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="assets/css/base.css" />
+    <link rel="stylesheet" href="assets/css/admin.css" />
+    <script type="module" src="assets/js/admin.js"></script>
+  </head>
+  <body>
+    <!-- ===================== INICIO DE SESIÓN ===================== -->
+    <main id="vista-login" class="login" hidden>
+      <div class="login-tarjeta tarjeta">
+        <div class="login-marca">
+          <span class="marca-logo"><span data-icono="edificio"></span></span>
+          <div>
+            <h1>Panel de Administración Municipal</h1>
+            <p class="ayuda">Acceso exclusivo para personal autorizado</p>
+          </div>
+        </div>
+
+        <form id="formulario-login" class="login-formulario" novalidate>
+          <div id="login-error" class="aviso aviso-error" role="alert" hidden></div>
+          <div class="campo">
+            <label for="usuario">Usuario</label>
+            <input id="usuario" name="usuario" class="control" type="text" autocomplete="username" autocapitalize="off" spellcheck="false" aria-describedby="error-usuario" />
+            <p class="mensaje-error" id="error-usuario" data-error-de="usuario"></p>
+          </div>
+          <div class="campo">
+            <label for="password">Contraseña</label>
+            <div class="control-con-boton">
+              <input id="password" name="password" class="control" type="password" autocomplete="current-password" aria-describedby="error-password" />
+              <button type="button" class="btn btn-fantasma btn-pequeno" id="btn-ver-password" aria-pressed="false">Mostrar</button>
+            </div>
+            <p class="mensaje-error" id="error-password" data-error-de="password"></p>
+          </div>
+          <button type="submit" class="btn btn-primario btn-grande" id="btn-login"><span data-icono="candado"></span><span class="btn-texto">Iniciar sesión</span></button>
+        </form>
+
+        <a class="login-volver" href="./"><span data-icono="izquierda"></span>Volver al portal ciudadano</a>
+      </div>
+    </main>
+
+    <!-- ===================== PANEL ===================== -->
+    <div id="vista-panel" class="panel" hidden>
+      <header class="barra-superior">
+        <div class="barra-interior">
+          <a class="marca" href="admin">
+            <span class="marca-logo"><span data-icono="edificio"></span></span>
+            <span class="marca-texto"><strong>Panel Municipal</strong><small>Atención de quejas ciudadanas</small></span>
+          </a>
+          <div class="barra-acciones">
+            <a href="./" target="_blank" rel="noopener" class="btn btn-fantasma btn-pequeno enlace-portal"><span data-icono="externo"></span>Ver portal</a>
+            <span class="chip-usuario"><span data-icono="usuario"></span><span id="nombre-usuario"></span></span>
+            <button type="button" class="btn btn-fantasma btn-pequeno" id="btn-salir"><span data-icono="salir"></span><span class="ocultar-movil">Salir</span></button>
+          </div>
+        </div>
+      </header>
+
+      <main class="panel-contenido">
+        <div class="encabezado-pagina">
+          <div>
+            <h1>Quejas y reportes ciudadanos</h1>
+            <p class="ayuda" id="ultima-actualizacion">Cargando información…</p>
+          </div>
+          <button type="button" class="btn btn-secundario" id="btn-actualizar"><span data-icono="refrescar"></span>Actualizar</button>
+        </div>
+
+        <div id="aviso-nuevas" class="aviso aviso-info aviso-nuevas" role="status" hidden></div>
+
+        <section class="indicadores" id="indicadores" aria-label="Indicadores generales">
+          <div class="esqueleto indicador-esqueleto"></div>
+          <div class="esqueleto indicador-esqueleto"></div>
+          <div class="esqueleto indicador-esqueleto"></div>
+          <div class="esqueleto indicador-esqueleto"></div>
+          <div class="esqueleto indicador-esqueleto"></div>
+          <div class="esqueleto indicador-esqueleto"></div>
+        </section>
+
+        <div class="panel-grid">
+          <section class="tarjeta bandeja" aria-labelledby="titulo-bandeja">
+            <div class="bandeja-cabecera">
+              <h2 id="titulo-bandeja">Bandeja de quejas</h2>
+              <span class="ayuda" id="conteo-resultados"></span>
+            </div>
+
+            <form id="filtros" class="filtros" role="search" aria-label="Filtrar quejas">
+              <div class="filtro-busqueda">
+                <span data-icono="buscar"></span>
+                <label for="f-q" class="visualmente-oculto">Buscar</label>
+                <input id="f-q" name="q" class="control" type="search" placeholder="Buscar por folio, asunto, descripción, dirección o nombre…" autocomplete="off" />
+              </div>
+              <div class="filtros-fila">
+                <label class="filtro">
+                  <span>Estado</span>
+                  <select name="estado" id="f-estado" class="control"><option value="">Todos</option></select>
+                </label>
+                <label class="filtro">
+                  <span>Categoría</span>
+                  <select name="categoria" id="f-categoria" class="control"><option value="">Todas</option></select>
+                </label>
+                <label class="filtro">
+                  <span>Prioridad</span>
+                  <select name="prioridad" id="f-prioridad" class="control"><option value="">Todas</option></select>
+                </label>
+                <label class="filtro">
+                  <span>Fotografía</span>
+                  <select name="conFoto" class="control">
+                    <option value="">Todas</option>
+                    <option value="si">Con foto</option>
+                    <option value="no">Sin foto</option>
+                  </select>
+                </label>
+                <label class="filtro">
+                  <span>Desde</span>
+                  <input name="desde" type="date" class="control" />
+                </label>
+                <label class="filtro">
+                  <span>Hasta</span>
+                  <input name="hasta" type="date" class="control" />
+                </label>
+                <label class="filtro">
+                  <span>Ordenar por</span>
+                  <select name="orden" class="control">
+                    <option value="recientes">Más recientes</option>
+                    <option value="antiguas">Más antiguas</option>
+                    <option value="prioridad">Prioridad</option>
+                    <option value="actualizadas">Última actualización</option>
+                  </select>
+                </label>
+                <button type="reset" class="btn btn-fantasma btn-pequeno filtro-limpiar" id="btn-limpiar"><span data-icono="x"></span>Limpiar</button>
+              </div>
+            </form>
+
+            <div id="error-lista" class="aviso aviso-error" role="alert" hidden></div>
+
+            <div class="tabla-contenedor">
+              <table class="tabla" id="tabla-quejas">
+                <caption class="visualmente-oculto">Listado de quejas ciudadanas registradas</caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Folio</th>
+                    <th scope="col">Queja</th>
+                    <th scope="col">Categoría</th>
+                    <th scope="col">Ubicación</th>
+                    <th scope="col" class="centrado">Foto</th>
+                    <th scope="col">Prioridad</th>
+                    <th scope="col">Estado</th>
+                  </tr>
+                </thead>
+                <tbody id="cuerpo-tabla"></tbody>
+              </table>
+            </div>
+
+            <nav class="paginacion" id="paginacion" aria-label="Paginación"></nav>
+          </section>
+
+          <aside class="tarjeta distribucion" aria-labelledby="titulo-distribucion">
+            <h2 id="titulo-distribucion"><span data-icono="grafico"></span>Quejas por categoría</h2>
+            <div id="grafico-categorias" class="barras"></div>
+            <h2 class="separado"><span data-icono="actividad"></span>Actividad reciente</h2>
+            <dl class="actividad" id="actividad"></dl>
+          </aside>
+        </div>
+      </main>
+    </div>
+
+    <!-- ===================== DETALLE DE LA QUEJA ===================== -->
+    <div id="detalle" class="cajon" hidden>
+      <div class="cajon-fondo" data-cerrar></div>
+      <article class="cajon-panel" role="dialog" aria-modal="true" aria-labelledby="detalle-titulo" tabindex="-1">
+        <header class="cajon-cabecera">
+          <div class="cajon-titulos">
+            <span class="detalle-folio" id="detalle-folio"></span>
+            <h2 id="detalle-titulo">Detalle de la queja</h2>
+            <div class="detalle-insignias" id="detalle-insignias"></div>
+          </div>
+          <button type="button" class="btn btn-fantasma btn-icono" data-cerrar aria-label="Cerrar detalle"><span data-icono="x"></span></button>
+        </header>
+        <div class="cajon-cuerpo" id="detalle-cuerpo"></div>
+      </article>
+    </div>
+
+    <!-- Visor de la fotografía en tamaño completo -->
+    <div id="visor" class="visor" role="dialog" aria-modal="true" aria-label="Fotografía en tamaño completo" hidden>
+      <button type="button" class="btn btn-icono visor-cerrar" id="visor-cerrar" aria-label="Cerrar fotografía"><span data-icono="x"></span></button>
+      <img id="visor-img" alt="" />
+    </div>
+  </body>
+</html>
